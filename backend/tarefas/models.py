@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+from usuarios.models import Usuario
 
 class Tarefa(models.Model):
 	STATUS_CHOICES = [
@@ -18,9 +18,10 @@ class Tarefa(models.Model):
 	titulo = models.CharField(max_length=255)
 	descricao = models.TextField()
 	status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ABERTA')
-	prioridade = models.CharField(max_length=20, choices=PRIORIDADE_CHOICES, default = 'NAO_URGENTE')
+	prioridade = models.CharField(max_length=20, choices=PRIORIDADE_CHOICES, default='NAO_URGENTE')
 	data_criacao = models.DateTimeField(auto_now_add=True)
 	data_entrega = models.DateField()
+	usuario_responsavel = models.ForeignKey(Usuario, blank=True, null=True, on_delete=models.SET_NULL)
 
 	def __str__(self):
 		return self.titulo
